@@ -44,7 +44,14 @@ function mouseUp() {
 
 function getMenuWidths(menu) {
     let stylesheet = document.styleSheets[0];
-    var itemOffset = 170;
+    var screenWidth = screen.availWidth;
+    if (screenWidth <= 1920) {
+        var itemOffset = 170;
+    } else if (screenWidth <= 2200) {
+        var itemOffset = 220;
+    } else {
+        var itemOffset = 320;
+    }
     var counter = 1;
     stylesheet.insertRule(".navbar ul li:nth-of-type(" + counter + ") {margin-right: " + itemOffset + "px;}", 0)
     menu.forEach(element => {

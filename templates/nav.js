@@ -1,5 +1,3 @@
-<script type="text/javascript">
-var menu = <?php echo json_encode($menu); ?>;
 function scrollSet() {
     let homeSection = document.querySelector('#home-section');
     let profSection = document.querySelector('#prof-section');
@@ -42,26 +40,21 @@ function mouseUp() {
     document.querySelector(".reset").setAttribute("onscroll", "scrollSet()");
 }
 
-function getMenuWidths(menu) {
+$(document).ready(function(){
     let stylesheet = document.styleSheets[0];
     var screenWidth = screen.availWidth;
     if (screenWidth <= 1920) {
         var itemOffset = 170;
-    } else if (screenWidth <= 2200) {
-        var itemOffset = 220;
     } else {
-        var itemOffset = 320;
+        var itemOffset = 220;
     }
     var counter = 1;
-    stylesheet.insertRule(".navbar ul li:nth-of-type(" + counter + ") {margin-right: " + itemOffset + "px;}", 0)
-    menu.forEach(element => {
-        var item = document.getElementById(element["id"]);
-        var itemWidth = (item.clientWidth);
-        stylesheet.insertRule(".navbar ul li:nth-of-type(" + counter + "):hover ~ .underline, #" + element["underline-id"] + " {width: " + itemWidth + "px; right: " + itemOffset + "px;}", counter);
+    stylesheet.insertRule(".navbar ul li:nth-of-type(" + counter + ") {margin-right: " + itemOffset + "px;}", 0);
+    $("li").each(function() {
+        var itemWidth = $(this).width();
+        var underlineID = $(this).children("a").attr("data-underline");
+        stylesheet.insertRule(".navbar ul li:nth-of-type(" + counter + "):hover ~ .underline, #" + underlineID + " {width: " + itemWidth + "px; right: " + itemOffset + "px;}", counter);
         itemOffset += itemWidth;
         counter += 1;
     });
-}
-
-getMenuWidths(menu);
-</script>
+})
